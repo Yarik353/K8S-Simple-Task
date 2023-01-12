@@ -1,1 +1,26 @@
-# TODO: Your code
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express-fe
+  template:
+    metadata:
+      labels:
+        app: express-fe
+    spec:
+      containers:
+        - name: express-fe
+          image: registry.hub.docker.com/yarik353/express-fe:latest
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: "3000"
+            - name: BASE_URL
+              value: "http://backend:8080/api"
+          ports:
+            - containerPort: 3000
+              name: http
